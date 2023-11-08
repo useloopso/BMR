@@ -1,33 +1,37 @@
 package config
 
 import (
-    "os"
-    "fmt"
-    "github.com/joho/godotenv"
+	"fmt"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
-    API_KEY string `json:"APIKey"`
-    ALCHEMY_API_URL string `json:"APIURL"`
+	SEPOLIA_RPC_URL string `json:"API_TESTNET"`
+	MAINNET_RPC_URL string `json:"API_MAINNET"`
 }
 
 func LoadMainnetConfig() (*Config, error) {
-    // load .env
-    if err := godotenv.Load(); err != nil {
-        return nil, err
-    }
+	// load .env
+	if err := godotenv.Load(); err != nil {
+		return nil, err
+	}
 
-    // set API key
-    apiKey := os.Getenv("ALCHEMY_API_KEY")
-    if apiKey == "" {
-        return nil, fmt.Errorf("ALCHEMY_API_KEY is not set in the .env file")
-    }
+	// set mainnet
+	api_mainnet := os.Getenv("MAINNET_RPC_URL")
+	if api_mainnet == "" {
+		return nil, fmt.Errorf("MAINNET_RPC_URL is not set in the .env file")
+	}
 
-    // set alchemy API URL
-    apiUrl := fmt.Sprintf("https://eth-sepolia.g.alchemy.com/v2/%s", apiKey)
+	// set sepolia
+	api_sepolia := os.Getenv("SEPOLIA_RPC_URL")
+	if api_sepolia == "" {
+		return nil, fmt.Errorf("SEPOLIA_RPC_URL is not set in the .env file")
+	}
 
-    return &Config{
-        API_KEY: apiKey,
-        ALCHEMY_API_URL: apiUrl,
-    }, nil
+	return &Config{
+		SEPOLIA_RPC_URL: api_sepolia,
+		MAINNET_RPC_URL: api_mainnet,
+	}, nil
 }
