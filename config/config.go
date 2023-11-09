@@ -10,28 +10,32 @@ import (
 type Config struct {
 	SEPOLIA_RPC_URL string `json:"API_TESTNET"`
 	MAINNET_RPC_URL string `json:"API_MAINNET"`
+	PORT            string `json:"PORT"`
 }
 
 func LoadMainnetConfig() (*Config, error) {
-	// load .env
 	if err := godotenv.Load(); err != nil {
 		return nil, err
 	}
 
-	// set mainnet
 	api_mainnet := os.Getenv("MAINNET_RPC_URL")
 	if api_mainnet == "" {
 		return nil, fmt.Errorf("MAINNET_RPC_URL is not set in the .env file")
 	}
 
-	// set sepolia
 	api_sepolia := os.Getenv("SEPOLIA_RPC_URL")
 	if api_sepolia == "" {
 		return nil, fmt.Errorf("SEPOLIA_RPC_URL is not set in the .env file")
 	}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000" // default value
+	}
+
 	return &Config{
 		SEPOLIA_RPC_URL: api_sepolia,
 		MAINNET_RPC_URL: api_mainnet,
+		PORT:            port,
 	}, nil
 }

@@ -11,10 +11,10 @@ import (
 	"github.com/ethereum/go-ethereum"
 	// "github.com/ethereum/go-ethereum/accounts/abi"
 	// "github.com/ethereum/go-ethereum/crypto"
-	"github.com/gofiber/fiber/v2"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/gofiber/fiber/v2"
 	"github.com/useloopso/BMR/config"
 )
 
@@ -45,8 +45,10 @@ func FetchBalance(c *fiber.Ctx) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Account balance: %d\n", balance) // 25893180161173005034
+	c.SendString(fmt.Sprintf("Account balance: %d\n", balance)) // 25893180161173005034
+}
 
+func FetchBlock(c *fiber.Ctx) {
 	// Get the latest known block
 	block, err := client.BlockByNumber(context.Background(), nil)
 	if err != nil {

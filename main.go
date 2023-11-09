@@ -1,38 +1,38 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 
-	handlers "github.com/useloopso/BMR/handlers"
 	// mainnet "github.com/useloopso/BMR/networks"
+	config "github.com/useloopso/BMR/config"
 	router "github.com/useloopso/BMR/router"
 )
 
 func main() {
+	// load config
+	config, err := config.LoadMainnetConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// new fiber app
 	app := fiber.New()
+
+	// CORS middleware
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*", // comma string format e.g. "localhost, loopso.xyz"
 		AllowHeaders: "Origin, Content-Type, Accept",
 	}))
 
 	// Set-up routes
-	router.Initalize(app)
-
-	// WebSocket route
-	app.Get("/ws", func(c *fiber.Ctx) error {
-		// Upgrade the request to a WebSocket connection
-		return c.SendStatus(http.StatusSwitchingProtocols)
-	})
-
-	go handlers.HandleWebSocketConnections() // Start WebSocket handler
+	router.Init(app)
 
 	// Listen to DAI events
 	// mainnet.ListenToEvents()
 
 	// listen to port 3000
-	app.Listen(":3000")
+	log.Fatal(app.Listen(":" + config.PORT))
 }

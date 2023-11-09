@@ -1,35 +1,36 @@
+// In handlers/websocket.go
 package handlers
 
 import (
-    "github.com/gorilla/websocket"
-    // "github.com/gofiber/fiber/v2"
-    "net/http"
+	"log"
+
+	"github.com/gofiber/websocket/v2"
 )
 
-var upgrader = websocket.Upgrader{
-    CheckOrigin: func(r *http.Request) bool {
-        return true
-    },
-}
+func WebsocketHandler(c *websocket.Conn) {
+	// c.Locals is added to the *websocket.Conn
+	log.Println(c.Locals("allowed"))  // true
+	log.Println(c.Params("id"))       // 123
+	log.Println(c.Query("v"))         // 1.0
+	log.Println(c.Cookies("session")) // ""
 
-func HandleWebSocketConnections() {
-    // Handle WebSocket connections in a goroutine
-    http.HandleFunc("/ws", handleWebSocket)
-    http.ListenAndServe(":8080", nil)
-}
+	// websocket.Conn bindings https://pkg.go.dev/github.com/fasthttp/websocket?tab=doc#pkg-index
+	var (
+		mt  int
+		msg []byte
+		err error
+	)
+	for {
+		if mt, msg, err = c.ReadMessage(); err != nil {
+			log.Println("read:", err)
+			break
+		}
+		log.Printf("recv: %s", msg)
 
-func handleWebSocket(w http.ResponseWriter, r *http.Request) {
-    // Upgrade the request to a WebSocket connection
-    conn, _ := upgrader.Upgrade(w, r, nil)
-    defer conn.Close()
+		if err = c.WriteMessage(mt, msg); err != nil {
+			log.Println("write:", err)
+			break
+		}
+	}
 
-    for {
-        messageType, p, err := conn.ReadMessage()
-        if err != nil {
-            return
-        }
-        if messageType == websocket.TextMessage {
-            // Handle WebSocket messages as needed
-        }
-    }
 }
