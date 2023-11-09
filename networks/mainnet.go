@@ -6,7 +6,7 @@ import (
 	"log"
 	"math/big"
 
-	// "strings"
+	config "github.com/useloopso/BMR/config"
 
 	"github.com/ethereum/go-ethereum"
 	// "github.com/ethereum/go-ethereum/accounts/abi"
@@ -15,7 +15,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gofiber/fiber/v2"
-	"github.com/useloopso/BMR/config"
+	"github.com/gofiber/websocket/v2"
 )
 
 var client *ethclient.Client
@@ -45,7 +45,7 @@ func FetchBalance(c *fiber.Ctx) {
 		log.Fatal(err)
 	}
 
-	c.SendString(fmt.Sprintf("Account balance: %d\n", balance)) // 25893180161173005034
+	c.Status(200).SendString(fmt.Sprintf("Account balance: %d\n", balance)) // 25893180161173005034
 }
 
 func FetchBlock(c *fiber.Ctx) {
@@ -58,14 +58,13 @@ func FetchBlock(c *fiber.Ctx) {
 	c.SendString(fmt.Sprintf("Latest block: %d\n", block.Number().Uint64()))
 }
 
-func ListenToEvents() {
+func ListenToEvents(c *websocket.Conn) {
+
 	// @dev Replace with actual contract address
 	contractAddress := common.HexToAddress("0x6B175474E89094C44Da98b954EedeAC495271d0F")
-
-	// Receive events in a Go channel
 	logs := make(chan types.Log)
 
-	// Create a filter to capture the events
+	// Filter to capture the events
 	query := ethereum.FilterQuery{
 		Addresses: []common.Address{contractAddress},
 		FromBlock: big.NewInt(0),
@@ -78,30 +77,30 @@ func ListenToEvents() {
 		log.Fatal(err)
 	}
 
-	for {
-		select {
-		case err := <-sub.Err():
-			log.Fatal(err)
-		case event := <-logs:
-			// transferID := event.Topics[1]
-			// tokenAddress := common.BytesToAddress(event.Data[12:32]) // adjust byte offsets
-			// amount := new(big.Int).SetBytes(event.Data[32:])
+	go func() {
+		var (
+			mt  int
+			msg []byte
+		)
+		for {
+			select {
+			case err := <-sub.Err():
+				log.Fatal(err)
+			case event := <-logs:
+				// transferID := event.Topics[1]
+				// tokenAddress := common.BytesToAddress(event.Data[12:32]) // adjust byte offsets
+				// amount := new(big.Int).SetBytes(event.Data[32:])
+				tokenAddress := event.Topics[1].Hex()
+				amount := event.Topics[2].Big()
 
-			fmt.Printf("Log Name: Approval\n")
-			tokenAddress := event.Topics[1].Hex()
-			amount := event.Topics[2].Big()
-
-			// @todo Process the event data
-			// @params transferID, tokenAddress, and amount
-
-			// fmt.Printf("TransferID: %s\n", transferID)
-			// fmt.Printf("Token Address: %s\n", tokenAddress.Hex())
-			// fmt.Printf("Amount: %s\n", amount.String())
-
-			fmt.Printf("Address: %s\n", tokenAddress)
-			fmt.Printf("Amount: %s\n", amount)
+				// @todo Process the event data
+				if err = c.WriteMessage(mt, msg); err != nil {
+					log.Printf("Address: %s\n", tokenAddress)
+					log.Printf("Amount: %s\n", amount)
+				}
+			}
 		}
-	}
+	}()
 }
 
 func main() {

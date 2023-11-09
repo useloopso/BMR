@@ -5,6 +5,8 @@ import (
 	"log"
 
 	"github.com/gofiber/websocket/v2"
+
+	mainnet "github.com/useloopso/BMR/networks"
 )
 
 func WebsocketHandler(c *websocket.Conn) {
@@ -14,23 +16,7 @@ func WebsocketHandler(c *websocket.Conn) {
 	log.Println(c.Query("v"))         // 1.0
 	log.Println(c.Cookies("session")) // ""
 
-	// websocket.Conn bindings https://pkg.go.dev/github.com/fasthttp/websocket?tab=doc#pkg-index
-	var (
-		mt  int
-		msg []byte
-		err error
-	)
-	for {
-		if mt, msg, err = c.ReadMessage(); err != nil {
-			log.Println("read:", err)
-			break
-		}
-		log.Printf("recv: %s", msg)
-
-		if err = c.WriteMessage(mt, msg); err != nil {
-			log.Println("write:", err)
-			break
-		}
-	}
+	// Listen to DAI approval events
+	mainnet.ListenToEvents(c)
 
 }

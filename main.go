@@ -12,16 +12,12 @@ import (
 )
 
 func main() {
-	// load config
 	config, err := config.LoadMainnetConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// new fiber app
 	app := fiber.New()
-
-	// CORS middleware
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*", // comma string format e.g. "localhost, loopso.xyz"
 		AllowHeaders: "Origin, Content-Type, Accept",
@@ -29,9 +25,6 @@ func main() {
 
 	// Set-up routes
 	router.Init(app)
-
-	// Listen to DAI events
-	// mainnet.ListenToEvents()
 
 	// listen to port 3000
 	log.Fatal(app.Listen(":" + config.PORT))

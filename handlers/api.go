@@ -1,9 +1,13 @@
 package handlers
 
 import (
+	"log"
+
 	"github.com/gofiber/fiber/v2"
 	mainnet "github.com/useloopso/BMR/networks"
 )
+
+var err *error
 
 // template
 func ApiHandler(c *fiber.Ctx) error {
@@ -21,10 +25,22 @@ func Home(c *fiber.Ctx) error {
 
 func FetchBalance(c *fiber.Ctx) error {
 	mainnet.FetchBalance(c)
+	if err != nil {
+		log.Fatal(err)
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Internal Server Error",
+		})
+	}
 	return nil
 }
 
 func FetchBlock(c *fiber.Ctx) error {
 	mainnet.FetchBlock(c)
+	if err != nil {
+		log.Fatal(err)
+		return c.Status(500).JSON(fiber.Map{
+			"message": "Internal Server Error",
+		})
+	}
 	return nil
 }
