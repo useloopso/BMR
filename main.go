@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 
-	// mainnet "github.com/useloopso/BMR/networks"
 	config "github.com/useloopso/BMR/config"
 	router "github.com/useloopso/BMR/router"
 )
