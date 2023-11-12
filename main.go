@@ -19,12 +19,12 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*", // comma string format e.g. "localhost, loopso.xyz"
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowHeaders: "Origin, Content-Type, Acceptlocalhost",
 	}))
 
 	// Set-up routes
 	router.Init(app)
 
 	// listen to port 3000
-	log.Fatal(app.Listen(":" + config.PORT))
+	log.Fatal(app.Listen("localhost:" + config.PORT))
 }

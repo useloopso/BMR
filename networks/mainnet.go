@@ -2,12 +2,14 @@ package mainnet
 
 import (
 	"context"
+	"crypto/ecdsa"
 	"fmt"
 	"log"
 	"math/big"
 
 	config "github.com/useloopso/BMR/config"
 	loopso "github.com/useloopso/BMR/config/abi"
+	model "github.com/useloopso/BMR/model"
 
 	"github.com/ethereum/go-ethereum"
 
@@ -15,13 +17,17 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 )
 
-var client *ethclient.Client
+var mumbaiClient *ethclient.Client
+var luksoTestnetClient *ethclient.Client
 var cfg *config.Config
+var mumbaiBridgeInstance *loopso.Loopso
+var luksoTestnetBridgeInstance *loopso.Loopso
 
 // @dev instantiate config for ethereum mainnet
 func init() {
@@ -32,17 +38,37 @@ func init() {
 		log.Fatalf("Error loading configuration: %v", err)
 	}
 
-	// Initialize the Ethereum client
-	client, err = ethclient.Dial(cfg.MUMBAI_RPC_URL)
+	// Initialize the Mumbai client
+	mumbaiClient, err = ethclient.Dial(cfg.MUMBAI_RPC_URL)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Initialize the Mumbai bridge contract
+	mumbaiBridgeInstance, err = loopso.NewLoopso(cfg.MUMBAI_BRIDGE_ADDRESS, mumbaiClient)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Initialize the Lukso testnet client
+	luksoTestnetClient, err = ethclient.Dial(cfg.LUKSO_TESTNET_RPC_URL)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Initialize the lukso testnet bridge contract
+	luksoTestnetBridgeInstance, err = loopso.NewLoopso(cfg.LUKSO_TESTNET_BRIDGE_ADDRESS, luksoTestnetClient)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Contract is loaded")
 }
 
 func FetchBalance(c *fiber.Ctx) {
 	// Get the balance of an account
 	account := common.HexToAddress("0x71c7656ec7ab88b098defb751b7401b5f6d8976f")
-	balance, err := client.BalanceAt(context.Background(), account, nil)
+	balance, err := mumbaiClient.BalanceAt(context.Background(), account, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,7 +78,7 @@ func FetchBalance(c *fiber.Ctx) {
 
 func FetchBlock(c *fiber.Ctx) {
 	// Get the latest known block
-	block, err := client.BlockByNumber(context.Background(), nil)
+	block, err := mumbaiClient.BlockByNumber(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -63,18 +89,18 @@ func FetchBlock(c *fiber.Ctx) {
 
 func ListenToEvents(c *websocket.Conn) {
 	// @dev Replace with actual contract address
-	contractAddress := common.HexToAddress("0xBb8d476fF7BEdCf2Eded931179196a17A3370A86")
+	// contractAddress := common.HexToAddress("0xBb8d476fF7BEdCf2Eded931179196a17A3370A86")
 	logs := make(chan types.Log)
 
 	// Filter to capture the events
 	query := ethereum.FilterQuery{
-		Addresses: []common.Address{contractAddress},
+		Addresses: []common.Address{cfg.MUMBAI_BRIDGE_ADDRESS},
 		FromBlock: big.NewInt(0),
 		ToBlock:   nil,
-		Topics:    [][]common.Hash{{common.HexToHash("0x11a762c44e982fe76f4f9b9c028673684f53601407c960c08a6f4472419373e6")}}, // topic hash
+		Topics:    [][]common.Hash{{cfg.TOPIC_HASH}}, // topic hash
 	}
 
-	sub, err := client.SubscribeFilterLogs(context.Background(), query, logs)
+	sub, err := mumbaiClient.SubscribeFilterLogs(context.Background(), query, logs)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -89,49 +115,88 @@ func ListenToEvents(c *websocket.Conn) {
 			case err := <-sub.Err():
 				log.Fatal(err)
 			case event := <-logs:
-				transferID := event.Topics[1]
+				topicHash := event.Topics[1]
 
 				// @todo Process the event data
+				QueryBridge(&topicHash)
 				if err = c.WriteMessage(mt, msg); err != nil {
-					log.Printf("TransferID: %s\n", transferID)
+					log.Printf("TransferID: %s\n", topicHash)
 				}
 			}
 		}
 	}()
 }
 
-func main() {
-	mainAddress := common.HexToAddress("0xbb8d476ff7bedcf2eded931179196a17a3370a86")
-	instance, err := loopso.NewLoopso(mainAddress, client)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println("Contract is loaded")
-
-	topic := "0xc353f0420caa96d0f2dbfd113ce48f76275dfa81ba13bdbd7bd8771afecb2318"
-
-	targetAddressBytes := common.HexToHash(topic)
-
-	fmt.Println(targetAddressBytes)
+func QueryBridge(topicHash *common.Hash) {
+	var topicBytes [32]byte
+	copy(topicBytes[:], topicHash[:])
 
 	// Call the contract function
-	tuple, err := instance.TokenTransfers(&bind.CallOpts{}, targetAddressBytes)
+	transferId, err := mumbaiBridgeInstance.TokenTransfers(&bind.CallOpts{}, topicBytes)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	tokenTransfer := tuple.TokenTransfer
-	amount := tuple.Amount
+	// Parse the response into a struct
+	tokenTransfer := model.TransferId{
+		Timestamp:    transferId.TokenTransfer.Timestamp,
+		SrcChain:     transferId.TokenTransfer.SrcChain,
+		SrcAddress:   transferId.TokenTransfer.SrcAddress,
+		DstChain:     transferId.TokenTransfer.DstChain,
+		DstAddress:   transferId.TokenTransfer.DstAddress,
+		TokenAddress: transferId.TokenTransfer.TokenAddress,
+		Amount:       transferId.Amount,
+	}
 
 	fmt.Println("Token Transfer:", tokenTransfer)
-	fmt.Println("Amount:", amount)
+	fmt.Println("Amount:", tokenTransfer.Amount)
+
+	WriteBridge(&tokenTransfer)
 }
 
-/*
-function: tokenTransfer
+func WriteBridge(transferId *model.TransferId) {
+	publicKey := cfg.PRIVATE_KEY.Public()
+	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
+	if !ok {
+		log.Fatal("error casting public key to ECDSA")
+	}
 
-types: tuple(block.timestamp: uint256, block.chainid: uint256, msg.sender: address,_dstChain: uint256,_dstAddress: address,_token,_amount: address)
+	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
 
-output: (1699659701,80001,0x1c46D242755040a0032505fD33C6e8b83293a332,4201,0x1c46D242755040a0032505fD33C6e8b83293a332,0x8cBF42B6590614AbE7AB5ffc89aF153F5d620fC3)
-*/
+	fmt.Println("public address:", fromAddress)
+
+	nonce, err := luksoTestnetClient.PendingNonceAt(context.Background(), fromAddress)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	gasPrice, err := luksoTestnetClient.SuggestGasPrice(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// a new keyed transactor
+	// auth := bind.NewKeyedTransactor(cfg.PRIVATE_KEY)
+	auth, err := bind.NewKeyedTransactorWithChainID(cfg.PRIVATE_KEY, big.NewInt(4201))
+
+	// set transaction options attached to the keyed transactor
+	auth.Nonce = big.NewInt(int64(nonce))
+	auth.Value = big.NewInt(0)     // in wei
+	auth.GasLimit = uint64(300000) // in units
+	auth.GasPrice = gasPrice
+
+	// send tx & wait to get mined
+	tx, err := luksoTestnetBridgeInstance.ReleaseTokens(auth, transferId.Amount, transferId.DstAddress, transferId.TokenAddress)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("tx sent: %s", tx.Hash().Hex())
+
+	// @todo verify it was mined
+
+}
+
+func main() {
+
+}
