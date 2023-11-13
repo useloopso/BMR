@@ -13,7 +13,6 @@ import (
 
 	"github.com/ethereum/go-ethereum"
 
-	// "github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -120,7 +119,7 @@ func ListenToEvents(c *websocket.Conn) {
 				// @todo Process the event data
 				QueryBridge(&topicHash)
 				if err = c.WriteMessage(mt, msg); err != nil {
-					log.Printf("TransferID: %s\n", topicHash)
+					log.Printf("\nTransferID: %s\n", topicHash)
 				}
 			}
 		}
@@ -137,19 +136,26 @@ func QueryBridge(topicHash *common.Hash) {
 		log.Fatal(err)
 	}
 
+	// Calculate the keccak256 hash using Keccak256Hash
+	// Expected: 0xa458b7ff0eb3c12e6e58c218f2a3111ab6cf26f757548bce2c887731f419675c
+	// Current:  0xfc7fc10a4f0cda5df054a738f831d9278dd9d0226eb21e8960da9b7f9489d9d4
+	hash := crypto.Keccak256Hash(transferId.TokenTransfer.TokenAddress.Bytes(), transferId.TokenTransfer.SrcChain.Bytes())
+
+	attestationId, err := luksoTestnetBridgeInstance.AttestedTokens(&bind.CallOpts{}, hash)
+
+	fmt.Println(hash, "heyyyyy", attestationId, "oooo2")
+
 	// Parse the response into a struct
 	tokenTransfer := model.TransferId{
-		Timestamp:    transferId.TokenTransfer.Timestamp,
-		SrcChain:     transferId.TokenTransfer.SrcChain,
-		SrcAddress:   transferId.TokenTransfer.SrcAddress,
-		DstChain:     transferId.TokenTransfer.DstChain,
-		DstAddress:   transferId.TokenTransfer.DstAddress,
-		TokenAddress: transferId.TokenTransfer.TokenAddress,
-		Amount:       transferId.Amount,
+		Timestamp:     transferId.TokenTransfer.Timestamp,
+		SrcChain:      transferId.TokenTransfer.SrcChain,
+		SrcAddress:    transferId.TokenTransfer.SrcAddress,
+		DstChain:      transferId.TokenTransfer.DstChain,
+		DstAddress:    transferId.TokenTransfer.DstAddress,
+		TokenAddress:  transferId.TokenTransfer.TokenAddress,
+		Amount:        transferId.Amount,
+		AttestationId: hash,
 	}
-
-	fmt.Println("Token Transfer:", tokenTransfer)
-	fmt.Println("Amount:", tokenTransfer.Amount)
 
 	WriteBridge(&tokenTransfer)
 }
@@ -163,7 +169,7 @@ func WriteBridge(transferId *model.TransferId) {
 
 	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
 
-	fmt.Println("public address:", fromAddress)
+	fmt.Println("relayer address:", fromAddress)
 
 	nonce, err := luksoTestnetClient.PendingNonceAt(context.Background(), fromAddress)
 	if err != nil {
@@ -174,6 +180,8 @@ func WriteBridge(transferId *model.TransferId) {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Println("gas:", gasPrice, "nonce:", nonce)
 
 	// a new keyed transactor
 	// auth := bind.NewKeyedTransactor(cfg.PRIVATE_KEY)
@@ -186,7 +194,7 @@ func WriteBridge(transferId *model.TransferId) {
 	auth.GasPrice = gasPrice
 
 	// send tx & wait to get mined
-	tx, err := luksoTestnetBridgeInstance.ReleaseTokens(auth, transferId.Amount, transferId.DstAddress, transferId.TokenAddress)
+	tx, err := luksoTestnetBridgeInstance.ReleaseWrappedTokens(auth, transferId.Amount, transferId.DstAddress, transferId.AttestationId)
 	if err != nil {
 		log.Fatal(err)
 	}

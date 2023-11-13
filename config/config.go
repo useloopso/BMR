@@ -33,10 +33,10 @@ func LoadMainnetConfig() (*Config, error) {
 	}
 
 	/** VARIABLES **/
-	var mumbaiAddress = common.HexToAddress("0xBb8d476fF7BEdCf2Eded931179196a17A3370A86")
-	var luksoTestnetAddress = common.HexToAddress("0x6C1aeA2C4933f040007a43Bc5683B0e068452c46")
+	var mumbai_address = common.HexToAddress("0xBb8d476fF7BEdCf2Eded931179196a17A3370A86")
+	var lukso_testnet_address = common.HexToAddress("0x6C1aeA2C4933f040007a43Bc5683B0e068452c46")
 
-	var topicHash = common.HexToHash("0x11a762c44e982fe76f4f9b9c028673684f53601407c960c08a6f4472419373e6")
+	var topic_hash = common.HexToHash("0x11a762c44e982fe76f4f9b9c028673684f53601407c960c08a6f4472419373e6")
 
 	/** .ENV **/
 	api_mainnet := os.Getenv("MAINNET_RPC_URL")
@@ -56,12 +56,12 @@ func LoadMainnetConfig() (*Config, error) {
 
 	api_lukso_testnet := os.Getenv("LUKSO_TESTNET_RPC_URL")
 	if api_lukso_testnet == "" {
-		return nil, fmt.Errorf("MUMBAI_RPC_URL is not set in the .env file")
+		return nil, fmt.Errorf("LUKSO_TESTNET_RPC_URL is not set in the .env file")
 	}
 
 	api_lukso_mainnet := os.Getenv("LUKSO_MAINNET_RPC_URL")
 	if api_lukso_mainnet == "" {
-		return nil, fmt.Errorf("MUMBAI_RPC_URL is not set in the .env file")
+		return nil, fmt.Errorf("LUKSO_MAINNET_RPC_URL is not set in the .env file")
 	}
 
 	port := os.Getenv("PORT")
@@ -78,9 +78,9 @@ func LoadMainnetConfig() (*Config, error) {
 	}
 
 	return &Config{
-		MUMBAI_BRIDGE_ADDRESS:        mumbaiAddress,
-		LUKSO_TESTNET_BRIDGE_ADDRESS: luksoTestnetAddress,
-		TOPIC_HASH:                   topicHash,
+		MUMBAI_BRIDGE_ADDRESS:        mumbai_address,
+		LUKSO_TESTNET_BRIDGE_ADDRESS: lukso_testnet_address,
+		TOPIC_HASH:                   topic_hash,
 
 		SEPOLIA_RPC_URL:       api_sepolia,
 		MUMBAI_RPC_URL:        api_mumbai,
