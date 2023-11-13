@@ -1,0 +1,14 @@
+{
+    "chains": [
+        {
+            "rpc_url": "MUMBAI WSS RPC HERE",
+            "chain_id": 80001,
+            "bridge_address": "0xf65484Cc0Ae4EBD92Cd6c4eb5fC61F17Edb9f2df"
+        },
+        {
+            "rpc_url": "LUKSO WSS RPC HERE",
+            "chain_id": 4201,
+            "bridge_address": "0x83AE9C9cB7Db728550dC32E40cdF0cB660ba945b"
+        }
+    ]
+}
