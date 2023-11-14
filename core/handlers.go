@@ -28,7 +28,7 @@ func HandleEvent(c *LoopsoClient, chain int, log ethtypes.Log) {
 		handleTokensBridged(c, chain, log)
 	case TokensBridgedBack:
 		fmt.Println("new tokens bridged back event")
-		handleTokensBridgedBack()
+		handleTokensBridgedBack(c, chain, log)
 	case NonFungibleTokensBridgedBack:
 		fmt.Println("new non-fungible tokens bridged back event")
 		handleNonFungibleTokensBridgedBack()
@@ -45,8 +45,9 @@ func handleTokensBridged(c *LoopsoClient, chain int, log ethtypes.Log) {
 	}
 }
 
-func handleTokensBridgedBack() {
-	// TODO
+func handleTokensBridgedBack(c *LoopsoClient, chain int, log ethtypes.Log) {
+	e := parseTokensBridgedBackEvent(log)
+	bridgeFungibleTokensBack(c, chain, e.Amount, e.To, e.AttestationID)
 }
 
 func handleNonFungibleTokensBridgedBack() {

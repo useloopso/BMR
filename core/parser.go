@@ -24,8 +24,16 @@ func praseTokensBridgedEvent(l ethtypes.Log) contracts.LoopsoTokensBridged {
 }
 
 func parseTokensBridgedBackEvent(l ethtypes.Log) contracts.LoopsoTokensBridgedBack {
-	// TODO
-	return contracts.LoopsoTokensBridgedBack{}
+	var attestationID [32]byte
+	amount := new(big.Int).SetBytes(l.Topics[1].Bytes())
+	to := common.BytesToAddress(l.Topics[2].Bytes())
+	copy(attestationID[:], l.Topics[3].Bytes()[:32])
+	return contracts.LoopsoTokensBridgedBack{
+		Amount:        amount,
+		To:            to,
+		AttestationID: attestationID,
+		Raw:           l,
+	}
 }
 
 func parseNonFungibleTokensBridedBackEvent(l ethtypes.Log) contracts.LoopsoNonFungibleTokensBridgedBack {
