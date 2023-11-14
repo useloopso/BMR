@@ -93,7 +93,7 @@ func bridgeFungibleTokensBack(c *LoopsoClient, chain int, amount *big.Int, dstAd
 		return
 	}
 
-	auth, err := c.Auth(chain)
+	auth, err := c.Auth(dstChainId)
 	if err != nil {
 		fmt.Println(err)
 		return
