@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"sync"
+	"time"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -44,10 +45,27 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup) error {
 
 	fmt.Println("listening on chain ID: ", chain)
 
+	const maxReconnectAttempts = 3
+	reconnectAttempts := 0
+
 	for {
 		select {
 		case err := <-sub.Err():
 			fmt.Println("Failed to get event log: ", err)
+
+			reconnectAttempts++
+			if reconnectAttempts > maxReconnectAttempts {
+				return fmt.Errorf("maximum reconnection attempts reached")
+			}
+
+			time.Sleep(3 * time.Second)
+
+			sub, err = c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
+			if err != nil {
+				return err
+			}
+
+			fmt.Println("listening on chain ID: ", chain)
 		case vLog := <-logs:
 			go HandleEvent(c, chain, vLog)
 		}
