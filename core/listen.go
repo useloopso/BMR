@@ -11,21 +11,22 @@ import (
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
 )
 
-func (c *LoopsoClient) ListenAll() {
+func (c *LoopsoClient) ListenAll(stopCh <-chan struct{}) {
 	var wg sync.WaitGroup
 
 	for _, chainInfo := range c.chainInfos {
 		wg.Add(1)
-		go c.Listen(chainInfo.ChainID, &wg)
+		go c.Listen(chainInfo.ChainID, &wg, stopCh)
 	}
 
 	wg.Wait()
 }
 
-func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup) error {
+func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup, stopCh <-chan struct{}) error {
 	defer wg.Done()
 	if !c.IsChainConnected(chain) {
-		return fmt.Errorf("not connected to RPC on target chain with chain ID: %d", chain)
+		fmt.Printf("Not connected to RPC on chain ID: %d\n", chain)
+		return nil
 	}
 
 	chainInfo := c.chainInfos[chain]
@@ -35,7 +36,8 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup) error {
 		Addresses: []common.Address{address},
 	}
 
-	ctx := context.Background()
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
 	logs := make(chan ethtypes.Log)
 	sub, err := c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
@@ -43,13 +45,15 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup) error {
 		return err
 	}
 
-	fmt.Println("listening on chain ID: ", chain)
+	fmt.Println("Listening on chain ID:", chain)
 
 	const maxReconnectAttempts = 3
 	reconnectAttempts := 0
 
 	for {
 		select {
+		case <-stopCh:
+			return nil // Stop listening if signaled
 		case err := <-sub.Err():
 			fmt.Println("Failed to get event log: ", err)
 
@@ -58,7 +62,14 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup) error {
 				return fmt.Errorf("maximum reconnection attempts reached")
 			}
 
-			time.Sleep(3 * time.Second)
+			backoff := time.Duration(reconnectAttempts) * time.Second
+			fmt.Printf("Reconnecting in %v...\n", backoff)
+
+			select {
+			case <-time.After(backoff):
+			case <-stopCh:
+				return nil // Stop listening if signaled during backoff
+			}
 
 			sub, err = c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
 			if err != nil {
