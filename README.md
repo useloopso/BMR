@@ -15,3 +15,14 @@ or
 air # https://github.com/cosmtrek/air required
 ```
 
+### Production
+```bash
+go build
+bmr start 
+```
+
+### Generate ABI in GoLang
+```bash
+abigen --abi=Loopso.json --pkg=contracts --ou
+t=Loopso.go
+```

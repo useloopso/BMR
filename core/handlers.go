@@ -41,7 +41,7 @@ func handleTokensBridged(c *LoopsoClient, chain int, log ethtypes.Log) {
 	case Fungible:
 		bridgeFungibleTokens(c, chain, e.TransferID)
 	case NonFungible:
-		bridgeNonFungibleTokens(c, e.TransferID)
+		bridgeNonFungibleTokens(c, chain, e.TransferID)
 	}
 }
 
