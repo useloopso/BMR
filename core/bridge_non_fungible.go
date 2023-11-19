@@ -65,3 +65,43 @@ func bridgeNonFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 	}
 	fmt.Println("tx hash: ", tx.Hash())
 }
+
+func bridgeNonFungibleTokensBack(c *LoopsoClient, chain int, tokenId *big.Int, dstAddress common.Address, attestationID [32]byte) {
+	chainInfo := c.chainInfos[chain]
+	client := c.conns[chain]
+
+	srcBridge, err := contracts.NewLoopso(common.HexToAddress(chainInfo.BridgeAddress), client)
+	if err != nil {
+		fmt.Println("failed to init bridge contract: ", err)
+		return
+	}
+
+	attestedToken, err := srcBridge.AttestedTokens(nil, attestationID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	dstChainId := int(attestedToken.TokenChain.Int64())
+	dstBridgeAddress := c.chainInfos[dstChainId].BridgeAddress
+	dstBridgeClient := c.conns[dstChainId]
+
+	dstBridge, err := contracts.NewLoopso(common.HexToAddress(dstBridgeAddress), dstBridgeClient)
+	if err != nil {
+		fmt.Println("failed to init bridge: ", err)
+		return
+	}
+
+	auth, err := c.Auth(dstChainId)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	tx, err := dstBridge.ReleaseNonFungibleTokens(auth, tokenId, dstAddress, attestedToken.TokenAddress)
+	if err != nil {
+		fmt.Println("error bridging non-fungible tokens back: ", err)
+		return
+	}
+	fmt.Println("tx hash: ", tx.Hash())
+}
