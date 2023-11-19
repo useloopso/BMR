@@ -80,6 +80,40 @@ func attestationFromTokenTransfer(tokenTransfer struct {
 	}
 }
 
+func attestationFromNonFungibleTokenTransfer(nonFungibleTokenTransfer struct {
+	TokenTransfer contracts.ILoopsoTokenTransferBase
+	TokenID       *big.Int
+	TokenURI      string
+}, client *ethclient.Client) contracts.ILoopsoTokenAttestation {
+	nonFungibleToken, err := contracts.NewERC721(nonFungibleTokenTransfer.TokenTransfer.TokenAddress, client)
+	if err != nil {
+		fmt.Println("failed to init erc721 token: ", err)
+		return contracts.ILoopsoTokenAttestation{}
+	}
+
+	name, err := nonFungibleToken.Name(nil)
+	if err != nil {
+		fmt.Println("failed to get token name: ", err)
+		return contracts.ILoopsoTokenAttestation{}
+	}
+
+	symbol, err := nonFungibleToken.Symbol(nil)
+	if err != nil {
+		fmt.Println("failed to get token symbol: ", err)
+		return contracts.ILoopsoTokenAttestation{}
+	}
+
+	return contracts.ILoopsoTokenAttestation{
+		TokenAddress:        nonFungibleTokenTransfer.TokenTransfer.TokenAddress,
+		TokenChain:          nonFungibleTokenTransfer.TokenTransfer.SrcChain,
+		TokenType:           1,
+		Decimals:            uint8(0),
+		Symbol:              symbol,
+		Name:                name,
+		WrappedTokenAddress: common.Address{},
+	}
+}
+
 func attestationID(tokenAddress common.Address, tokenChain int) common.Hash {
 	chainBytes := common.LeftPadBytes(big.NewInt(int64(tokenChain)).Bytes(), 32)
 	return crypto.Keccak256Hash(tokenAddress[:], chainBytes)

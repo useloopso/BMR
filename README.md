@@ -23,6 +23,5 @@ bmr start
 
 ### Generate ABI in GoLang
 ```bash
-abigen --abi=Loopso.json --pkg=contracts --ou
-t=Loopso.go
+abigen --abi=Loopso.abi --pkg=contracts --type=Loopso --out=Loopso.go
 ```

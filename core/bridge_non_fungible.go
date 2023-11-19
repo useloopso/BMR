@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/useloopso/BMR/contracts"
@@ -17,13 +18,13 @@ func bridgeNonFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 		return
 	}
 
-	tokenTransferNFT, err := srcBridge.TokenTransfersNonFungible(nil, transferID)
+	nonFungibleTokenTransfer, err := srcBridge.TokenTransfersNonFungible(nil, transferID)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	dstChainId := int(tokenTransferNFT.TokenTransfer.DstChain.Int64())
+	dstChainId := int(nonFungibleTokenTransfer.TokenTransfer.DstChain.Int64())
 	dstBridgeAddress := c.chainInfos[dstChainId].BridgeAddress
 	dstBridgeClient := c.conns[dstChainId]
 
@@ -33,7 +34,11 @@ func bridgeNonFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 		return
 	}
 
-	// @todo: check whether NFT is supported
+	isFungibleTokenSupported, err := dstBridge.IsTokenSupported(nil, nonFungibleTokenTransfer.TokenTransfer.TokenAddress, big.NewInt(int64(chain)))
+	if err != nil {
+		fmt.Println("failed to check is non-fungible token supported:", err)
+		return
+	}
 
 	auth, err := c.Auth(dstChainId)
 	if err != nil {
@@ -41,8 +46,19 @@ func bridgeNonFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 		return
 	}
 
-	attestationID := attestationID(tokenTransferNFT.TokenTransfer.TokenAddress, chain)
-	tx, err := dstBridge.ReleaseWrappedNonFungibleTokens(auth, tokenTransferNFT.TokenID, tokenTransferNFT.TokenURI, tokenTransferNFT.TokenTransfer.DstAddress, attestationID)
+	if !isFungibleTokenSupported {
+		// if no --> all attestToken on destination chain
+		att := attestationFromNonFungibleTokenTransfer(nonFungibleTokenTransfer, client)
+		tx, err := dstBridge.AttestToken(auth, att)
+		if err != nil {
+			fmt.Println("failed to attest token: ", err)
+			return
+		}
+		fmt.Println("attest token tx hash: ", tx.Hash())
+	}
+
+	attestationID := attestationID(nonFungibleTokenTransfer.TokenTransfer.TokenAddress, chain)
+	tx, err := dstBridge.ReleaseWrappedNonFungibleTokens(auth, nonFungibleTokenTransfer.TokenID, nonFungibleTokenTransfer.TokenURI, nonFungibleTokenTransfer.TokenTransfer.DstAddress, attestationID)
 	if err != nil {
 		fmt.Println("error releasing wrapped non-fungible tokens: ", err)
 		return
