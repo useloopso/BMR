@@ -2,9 +2,8 @@
 ~/.DS_Store
 
 /.vscode
+/chain_config.json
 
 /tmp
 server
 .env
-
-chain_config.json
