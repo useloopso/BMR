@@ -1,7 +1,6 @@
 package core
 
 import (
-	"encoding/binary"
 	"fmt"
 	"math/big"
 
@@ -15,7 +14,7 @@ import (
 func praseTokensBridgedEvent(l ethtypes.Log) contracts.LoopsoTokensBridged {
 	var transferID [32]byte
 	copy(transferID[:], l.Topics[1].Bytes()[:32])
-	tokenType := uint8(binary.LittleEndian.Uint32(l.Topics[2].Bytes()))
+	tokenType := uint8(big.NewInt(0).SetBytes(l.Topics[2].Bytes()).Uint64())
 	return contracts.LoopsoTokensBridged{
 		TransferID: transferID,
 		TokenType:  tokenType,
@@ -115,7 +114,7 @@ func attestationFromNonFungibleTokenTransfer(nonFungibleTokenTransfer struct {
 		TokenAddress:        nonFungibleTokenTransfer.TokenTransfer.TokenAddress,
 		TokenChain:          nonFungibleTokenTransfer.TokenTransfer.SrcChain,
 		TokenType:           1,
-		Decimals:            uint8(0),
+		Decimals:            0,
 		Symbol:              symbol,
 		Name:                name,
 		WrappedTokenAddress: common.Address{},
