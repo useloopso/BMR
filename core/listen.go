@@ -78,7 +78,7 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup, stopCh <-chan struc
 
 			fmt.Println("listening on chain ID: ", chain)
 		case vLog := <-logs:
-			go HandleEvent(c, chain, vLog)
+			go c.HandleEvent(chain, vLog)
 		}
 	}
 }
