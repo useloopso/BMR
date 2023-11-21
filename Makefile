@@ -1,7 +1,8 @@
 build:
-	go build -o server main.go
+	go build -o bmr
 run: build
-	./server
+	./bmr start
 watch:
 	reflex -s -r '\.go$$' make run
-
+clean:
+	rm bmr
