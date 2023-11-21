@@ -1,9 +1,11 @@
 package core
 
 import (
+	"context"
 	"fmt"
 	"math/big"
 
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/useloopso/BMR/contracts"
 )
@@ -40,24 +42,34 @@ func bridgeNonFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 		return
 	}
 
-	auth, err := c.Auth(dstChainId)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
 	if !isFungibleTokenSupported {
 		// if no --> all attestToken on destination chain
 		att := attestationFromNonFungibleTokenTransfer(nonFungibleTokenTransfer, client)
+		auth, err := c.Auth(dstChainId)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		tx, err := dstBridge.AttestToken(auth, att)
 		if err != nil {
 			fmt.Println("failed to attest token: ", err)
 			return
 		}
 		fmt.Println("attest token tx hash: ", tx.Hash())
+
+		_, err = bind.WaitMined(context.Background(), dstBridgeClient, tx)
+		if err != nil {
+			fmt.Println("failed to wait for attest token tx to be mined: ", err)
+			return
+		}
 	}
 
 	attestationID := attestationID(nonFungibleTokenTransfer.TokenTransfer.TokenAddress, chain)
+	auth, err := c.Auth(dstChainId)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	tx, err := dstBridge.ReleaseWrappedNonFungibleTokens(auth, nonFungibleTokenTransfer.TokenID, nonFungibleTokenTransfer.TokenURI, nonFungibleTokenTransfer.TokenTransfer.DstAddress, attestationID)
 	if err != nil {
 		fmt.Println("error releasing wrapped non-fungible tokens: ", err)
