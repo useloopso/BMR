@@ -1,9 +1,6 @@
 package core
 
 import (
-	"context"
-	"crypto/ecdsa"
-	"errors"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -40,24 +37,12 @@ func (c *LoopsoClient) Auth(chainId int) (*bind.TransactOpts, error) {
 	if err != nil {
 		return nil, err
 	}
-	pubKey := privKey.Public()
-	publicKeyECDSA, ok := pubKey.(*ecdsa.PublicKey)
-	if !ok {
-		return nil, errors.New("error casting public key to ECDSA")
-	}
-	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
-
-	nonce, err := c.conns[chainId].PendingNonceAt(context.Background(), fromAddress)
-	if err != nil {
-		return nil, err
-	}
 
 	auth, err := bind.NewKeyedTransactorWithChainID(privKey, big.NewInt(int64(chainId)))
 	if err != nil {
 		return nil, err
 	}
-	auth.Nonce = big.NewInt(int64(nonce))
-	auth.Value = big.NewInt(0)
+
 	return auth, nil
 }
 

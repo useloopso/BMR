@@ -43,15 +43,16 @@ func bridgeFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 		return
 	}
 
+	auth, err := c.Auth(dstChainId)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	if !isTokenSupported {
 		// if no --> all attestToken on destination chain
 		att := attestationFromTokenTransfer(tokenTransfer, client)
 
-		auth, err := c.Auth(dstChainId)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
 		tx, err := dstBridge.AttestToken(auth, att)
 		if err != nil {
 			fmt.Println("failed to attest token: ", err)
@@ -68,11 +69,6 @@ func bridgeFungibleTokens(c *LoopsoClient, chain int, transferID [32]byte) {
 
 	attestationID := attestationID(tokenTransfer.TokenTransfer.TokenAddress, chain)
 
-	auth, err := c.Auth(dstChainId)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 	tx, err := dstBridge.ReleaseWrappedTokens(auth, tokenTransfer.Amount, tokenTransfer.TokenTransfer.DstAddress, attestationID)
 	if err != nil {
 		fmt.Println("error releasing wrapped tokens: ", err)
