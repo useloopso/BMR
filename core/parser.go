@@ -69,12 +69,14 @@ func attestationFromTokenTransfer(tokenTransfer struct {
 		fmt.Println("failed to get token name: ", err)
 		return contracts.ILoopsoTokenAttestation{}
 	}
+	name = "Wrapped " + name
 
 	symbol, err := token.Symbol(nil)
 	if err != nil {
 		fmt.Println("failed to get token symbol: ", err)
 		return contracts.ILoopsoTokenAttestation{}
 	}
+	symbol = "wl" + symbol
 
 	return contracts.ILoopsoTokenAttestation{
 		TokenAddress:        tokenTransfer.TokenTransfer.TokenAddress,
@@ -103,12 +105,14 @@ func attestationFromNonFungibleTokenTransfer(nonFungibleTokenTransfer struct {
 		fmt.Println("failed to get token name: ", err)
 		return contracts.ILoopsoTokenAttestation{}
 	}
+	name = "Wrapped " + name
 
 	symbol, err := nonFungibleToken.Symbol(nil)
 	if err != nil {
 		fmt.Println("failed to get token symbol: ", err)
 		return contracts.ILoopsoTokenAttestation{}
 	}
+	symbol = "wl" + symbol
 
 	return contracts.ILoopsoTokenAttestation{
 		TokenAddress:        nonFungibleTokenTransfer.TokenTransfer.TokenAddress,
