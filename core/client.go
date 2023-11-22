@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/big"
+	"time"
 
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	ethtypes "github.com/ethereum/go-ethereum/core/types"
@@ -42,21 +43,8 @@ type loopsoEventHandler func(c *LoopsoClient, chain int, log ethtypes.Log) error
 
 func (c *LoopsoClient) RetryOnError(handler loopsoEventHandler, chain int, log ethtypes.Log) error {
 	for _, chainInfo := range c.chainInfos {
-		if !utils.IsClientConnected(c.conns[chainInfo.ChainID]) {
-			c.conns[chainInfo.ChainID].Close()
-
-			fmt.Println("RPC error on chain: ", chainInfo.ChainID)
-
-			for _, fallbackRpc := range chainInfo.FallbackRpcs {
-				client, err := ethclient.Dial(fallbackRpc)
-				if err != nil {
-					fmt.Println("Fallback rpc connect error: ", err)
-					continue
-				}
-
-				c.conns[chainInfo.ChainID] = client
-				fmt.Println("reconnected to RPC on chain: ", chainInfo.ChainID)
-			}
+		if err := c.connectToFallback(chainInfo); err != nil {
+			fmt.Println(err)
 		}
 	}
 
@@ -88,4 +76,45 @@ func (c *LoopsoClient) Auth(chainId int) (*bind.TransactOpts, error) {
 
 func (c *LoopsoClient) IsChainConnected(chain int) bool {
 	return c.conns[chain] != nil
+}
+
+func (c *LoopsoClient) connectToFallback(chainInfo types.ChainInfo) error {
+	if !utils.IsClientConnected(c.conns[chainInfo.ChainID]) {
+		c.conns[chainInfo.ChainID].Close()
+		fmt.Println("RPC error on chain: ", chainInfo.ChainID)
+
+		for _, fallbackRpc := range chainInfo.FallbackRpcs {
+			client, err := ethclient.Dial(fallbackRpc)
+			if err != nil {
+				fmt.Println("Fallback rpc connect error: ", err)
+				continue
+			}
+
+			c.conns[chainInfo.ChainID] = client
+			fmt.Println("reconnected to RPC on chain: ", chainInfo.ChainID)
+			return nil
+		}
+		return fmt.Errorf("failed to connect to any fallback RPC on chain %d", chainInfo.ChainID)
+	}
+	return nil
+}
+
+func (c *LoopsoClient) tryReconnect(chain int, attempts int, reconnectDelay time.Duration) error {
+	c.conns[chain].Close()
+	chainInfo := c.chainInfos[chain]
+
+	var errOut error
+
+	for i := 0; i < attempts; i++ {
+		client, err := ethclient.Dial(chainInfo.RpcURL)
+		if err != nil {
+			errOut = err
+			time.Sleep(time.Second * reconnectDelay)
+			continue
+		}
+		c.conns[chain] = client
+		return nil
+	}
+
+	return errOut
 }
