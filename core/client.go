@@ -11,6 +11,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/useloopso/BMR/config"
 	"github.com/useloopso/BMR/types"
+	"github.com/useloopso/BMR/utils"
 )
 
 type LoopsoClient struct {
@@ -39,45 +40,36 @@ func NewClient(chains []types.ChainInfo) (*LoopsoClient, error) {
 
 type loopsoEventHandler func(c *LoopsoClient, chain int, log ethtypes.Log) error
 
-/*
-retry on error will be called to handle errors on any of the event handlers
-- go through the fallback rpcs
-- replace current RPC with fallback RPC
-- call failed func again
-- if error == nil, return nil
-- else try again with next fallback rpc
-*/
 func (c *LoopsoClient) RetryOnError(handler loopsoEventHandler, chain int, log ethtypes.Log) error {
-	if len(c.chainInfos[chain].FallbackRpcs) == 0 {
-		return errors.New("no fallback RPCs in chain config")
+	for _, chainInfo := range c.chainInfos {
+		if !utils.IsClientConnected(c.conns[chainInfo.ChainID]) {
+			c.conns[chainInfo.ChainID].Close()
+
+			fmt.Println("RPC error on chain: ", chainInfo.ChainID)
+
+			for _, fallbackRpc := range chainInfo.FallbackRpcs {
+				client, err := ethclient.Dial(fallbackRpc)
+				if err != nil {
+					fmt.Println("Fallback rpc connect error: ", err)
+					continue
+				}
+
+				c.conns[chainInfo.ChainID] = client
+				fmt.Println("reconnected to RPC on chain: ", chainInfo.ChainID)
+			}
+		}
 	}
 
 	for i := 0; i < c.retryCount; i++ {
 		fmt.Println("retrying...")
-		for j, fallbackRpc := range c.chainInfos[chain].FallbackRpcs {
-			client, err := ethclient.Dial(fallbackRpc)
-			if err != nil {
-				fmt.Println("Fallback rpc connect error: ", err)
-				continue
-			}
-
-			oldClient := c.conns[chain]
-			c.conns[chain] = client
-
-			err = handler(c, chain, log)
-			if err == nil {
-				oldClient.Close()
-				fmt.Println("call successful with fallback RPC")
-				return nil
-			}
-
-			fmt.Println("call failed with fallback RPC no. ", j, " error: ", err)
-			c.conns[chain].Close()
-			c.conns[chain] = oldClient
+		err := handler(c, chain, log)
+		if err == nil {
+			fmt.Println("call successful with fallback RPC")
+			return nil
 		}
 	}
 
-	return errors.New("call failed with all fallback RPCs")
+	return errors.New("call failed with fallback RPCs")
 }
 
 func (c *LoopsoClient) Auth(chainId int) (*bind.TransactOpts, error) {

@@ -36,11 +36,11 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup, stopCh <-chan struc
 		Addresses: []common.Address{address},
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	/* ctx, cancel := context.WithCancel(context.Background())
+	defer cancel() */
 
 	logs := make(chan ethtypes.Log)
-	sub, err := c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
+	sub, err := c.conns[chain].SubscribeFilterLogs(context.Background(), query, logs)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup, stopCh <-chan struc
 				return nil // Stop listening if signaled during backoff
 			}
 
-			sub, err = c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
+			sub, err = c.conns[chain].SubscribeFilterLogs(context.Background(), query, logs)
 			if err != nil {
 				return err
 			}
