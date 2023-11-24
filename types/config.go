@@ -6,8 +6,10 @@ type ConfigInfo struct {
 }
 
 type ChainInfo struct {
-	RpcURL        string   `mapstructure:"rpc_url"`
-	FallbackRpcs  []string `mapstructure:"fallback_rpcs"`
-	ChainID       int      `mapstructure:"chain_id"`
-	BridgeAddress string   `mapstructure:"bridge_address"`
+	RpcURL            string   `mapstructure:"rpc_url"`
+	FallbackRpcs      []string `mapstructure:"fallback_rpcs"`
+	ChainID           int      `mapstructure:"chain_id"`
+	BridgeAddress     string   `mapstructure:"bridge_address"`
+	NativeTokenName   string   `mapstructure:"native_token_name"`
+	NativeTokenSymbol string   `mapstructure:"native_token_symbol"`
 }

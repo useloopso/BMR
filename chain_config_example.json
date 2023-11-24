@@ -4,13 +4,17 @@
             "rpc_url": "MUMBAI WSS RPC HERE",
             "fallback_rpcs":["MUMBAI WSS RPC HERE", "MUMBAI WSS RPC HERE"],
             "chain_id": 80001,
-            "bridge_address": "0xf65484Cc0Ae4EBD92Cd6c4eb5fC61F17Edb9f2df"
+            "bridge_address": "0xF077ad939698F5240699Fd900C3536eE1Be445e5",
+            "native_token_name": "MATIC",
+            "native_token_symbol": "MATIC"
         },
         {
             "rpc_url": "LUKSO WSS RPC HERE",
             "fallback_rpcs":["LUKSO WSS RPC HERE", "LUKSO WSS RPC HERE"],
             "chain_id": 4201,
-            "bridge_address": "0x83AE9C9cB7Db728550dC32E40cdF0cB660ba945b"
+            "bridge_address": "0xD2dd677cfb7e31E7F8467d53585c3b517930ff52",
+            "native_token_name": "Lukso",
+            "native_token_symbol": "LYX"
         }
     ]
 }

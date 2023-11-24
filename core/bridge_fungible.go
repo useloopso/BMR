@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/useloopso/BMR/contracts"
+	"github.com/useloopso/BMR/utils"
 )
 
 func (c *LoopsoClient) bridgeFungibleTokens(chain int, transferID [32]byte) error {
@@ -50,8 +51,13 @@ func (c *LoopsoClient) bridgeFungibleTokens(chain int, transferID [32]byte) erro
 	}
 
 	if !isTokenSupported {
+		var att contracts.ILoopsoTokenAttestation
 		// if no --> all attestToken on destination chain
-		att := attestationFromTokenTransfer(tokenTransfer, client)
+		if utils.IsZeroAddress(tokenTransfer.TokenTransfer.TokenAddress) {
+			att = attestationFromNativeTokenTransfer(chainInfo.NativeTokenName, chainInfo.NativeTokenSymbol, tokenTransfer, client)
+		} else {
+			att = attestationFromTokenTransfer(tokenTransfer, client)
+		}
 
 		tx, err := dstBridge.AttestToken(auth, att)
 		if err != nil {
@@ -110,11 +116,20 @@ func (c *LoopsoClient) bridgeFungibleTokensBack(chain int, amount *big.Int, dstA
 		return err
 	}
 
-	tx, err := dstBridge.ReleaseTokens(auth, amount, dstAddress, attestedToken.TokenAddress)
-	if err != nil {
-		fmt.Println("error bridging tokens back: ", err)
-		return err
+	if utils.IsZeroAddress(attestedToken.TokenAddress) {
+		tx, err := dstBridge.ReleaseNativeTokens(auth, amount, dstAddress)
+		if err != nil {
+			fmt.Println("error bridging native tokens back: ", err)
+			return err
+		}
+		fmt.Println("tx hash: ", tx.Hash())
+	} else {
+		tx, err := dstBridge.ReleaseTokens(auth, amount, dstAddress, attestedToken.TokenAddress)
+		if err != nil {
+			fmt.Println("error bridging tokens back: ", err)
+			return err
+		}
+		fmt.Println("tx hash: ", tx.Hash())
 	}
-	fmt.Println("tx hash: ", tx.Hash())
 	return nil
 }

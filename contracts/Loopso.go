@@ -1,5 +1,6 @@
 // Code generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
+
 package contracts
 
 import (
@@ -47,7 +48,7 @@ type ILoopsoTokenTransferBase struct {
 }
 
 // LoopsoABI is the input ABI used to generate the binding from.
-const LoopsoABI = "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"NonFungibleTokensBridgedBack\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"TokenAttested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"transferID\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"}],\"name\":\"TokensBridged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"TokensBridgedBack\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokensReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"WrappedNonFungibleTokensReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"WrappedTokensReleased\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RELAYER_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenAttestation\",\"name\":\"attestation\",\"type\":\"tuple\"}],\"name\":\"attestToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"attestationIds\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"attestedTokens\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenID\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"tokenURI\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_dstAddress\",\"type\":\"address\"}],\"name\":\"bridgeNonFungibleTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"bridgeNonFungibleTokensBack\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_dstAddress\",\"type\":\"address\"}],\"name\":\"bridgeTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"bridgeTokensBack\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAllSupportedTokens\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenAttestation[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSupportedTokensLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenChain\",\"type\":\"uint256\"}],\"name\":\"isTokenSupported\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"releaseNonFungibleTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"releaseTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_tokenURI\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"releaseWrappedNonFungibleTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"releaseWrappedTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"callerConfirmation\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractITokenFactory\",\"name\":\"_tokenFactory\",\"type\":\"address\"}],\"name\":\"setTokenFactory\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"tokenFactory\",\"outputs\":[{\"internalType\":\"contractITokenFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"tokenTransfers\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"srcChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"srcAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"dstAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenTransferBase\",\"name\":\"tokenTransfer\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"tokenTransfersNonFungible\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"srcChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"srcAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"dstAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenTransferBase\",\"name\":\"tokenTransfer\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"tokenURI\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]"
+const LoopsoABI = "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"NativeTokensReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"NonFungibleTokensBridgedBack\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"NonFungibleTokensReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"TokenAttested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"transferID\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"}],\"name\":\"TokensBridged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"TokensBridgedBack\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokensReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"WrappedNonFungibleTokensReleased\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"attestationID\",\"type\":\"bytes32\"}],\"name\":\"WrappedTokensReleased\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"FEE_FUNGIBLE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"FEE_NON_FUNGIBLE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RELAYER_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenAttestation\",\"name\":\"attestation\",\"type\":\"tuple\"}],\"name\":\"attestToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"attestationIds\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"attestedTokens\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_dstAddress\",\"type\":\"address\"}],\"name\":\"bridgeNativeTokens\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenID\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"tokenURI\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_dstAddress\",\"type\":\"address\"}],\"name\":\"bridgeNonFungibleTokens\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"bridgeNonFungibleTokensBack\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_dstAddress\",\"type\":\"address\"}],\"name\":\"bridgeTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"bridgeTokensBack\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"discountNft\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeReceiver\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAllSupportedTokens\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenAttestation[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getSupportedTokensLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokenChain\",\"type\":\"uint256\"}],\"name\":\"isTokenSupported\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"isWrappedToken\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"}],\"name\":\"releaseNativeTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"releaseNonFungibleTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"releaseTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_tokenURI\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"releaseWrappedNonFungibleTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"_attestationID\",\"type\":\"bytes32\"}],\"name\":\"releaseWrappedTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"callerConfirmation\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_discountNft\",\"type\":\"address\"}],\"name\":\"setDiscountNft\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_feeReceiver\",\"type\":\"address\"}],\"name\":\"setFeeReceiver\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_fee\",\"type\":\"uint256\"}],\"name\":\"setFungibleFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_fee\",\"type\":\"uint256\"}],\"name\":\"setNonFungibleFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contractITokenFactory\",\"name\":\"_tokenFactory\",\"type\":\"address\"}],\"name\":\"setTokenFactory\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"tokenFactory\",\"outputs\":[{\"internalType\":\"contractITokenFactory\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"tokenTransfers\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"srcChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"srcAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"dstAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenTransferBase\",\"name\":\"tokenTransfer\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"name\":\"tokenTransfersNonFungible\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"srcChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"srcAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"dstChain\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"dstAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenTransferBase\",\"name\":\"tokenTransfer\",\"type\":\"tuple\"},{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"tokenURI\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_wrappedToken\",\"type\":\"address\"}],\"name\":\"wrappedTokenInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"tokenAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenChain\",\"type\":\"uint256\"},{\"internalType\":\"enumILoopso.TokenType\",\"name\":\"tokenType\",\"type\":\"uint8\"},{\"internalType\":\"uint8\",\"name\":\"decimals\",\"type\":\"uint8\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"wrappedTokenAddress\",\"type\":\"address\"}],\"internalType\":\"structILoopso.TokenAttestation\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]"
 
 // Loopso is an auto generated Go binding around an Ethereum contract.
 type Loopso struct {
@@ -222,6 +223,68 @@ func (_Loopso *LoopsoCallerSession) DEFAULTADMINROLE() ([32]byte, error) {
 	return _Loopso.Contract.DEFAULTADMINROLE(&_Loopso.CallOpts)
 }
 
+// FEEFUNGIBLE is a free data retrieval call binding the contract method 0xe6be636f.
+//
+// Solidity: function FEE_FUNGIBLE() view returns(uint256)
+func (_Loopso *LoopsoCaller) FEEFUNGIBLE(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _Loopso.contract.Call(opts, &out, "FEE_FUNGIBLE")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// FEEFUNGIBLE is a free data retrieval call binding the contract method 0xe6be636f.
+//
+// Solidity: function FEE_FUNGIBLE() view returns(uint256)
+func (_Loopso *LoopsoSession) FEEFUNGIBLE() (*big.Int, error) {
+	return _Loopso.Contract.FEEFUNGIBLE(&_Loopso.CallOpts)
+}
+
+// FEEFUNGIBLE is a free data retrieval call binding the contract method 0xe6be636f.
+//
+// Solidity: function FEE_FUNGIBLE() view returns(uint256)
+func (_Loopso *LoopsoCallerSession) FEEFUNGIBLE() (*big.Int, error) {
+	return _Loopso.Contract.FEEFUNGIBLE(&_Loopso.CallOpts)
+}
+
+// FEENONFUNGIBLE is a free data retrieval call binding the contract method 0xd5abe9c3.
+//
+// Solidity: function FEE_NON_FUNGIBLE() view returns(uint256)
+func (_Loopso *LoopsoCaller) FEENONFUNGIBLE(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _Loopso.contract.Call(opts, &out, "FEE_NON_FUNGIBLE")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// FEENONFUNGIBLE is a free data retrieval call binding the contract method 0xd5abe9c3.
+//
+// Solidity: function FEE_NON_FUNGIBLE() view returns(uint256)
+func (_Loopso *LoopsoSession) FEENONFUNGIBLE() (*big.Int, error) {
+	return _Loopso.Contract.FEENONFUNGIBLE(&_Loopso.CallOpts)
+}
+
+// FEENONFUNGIBLE is a free data retrieval call binding the contract method 0xd5abe9c3.
+//
+// Solidity: function FEE_NON_FUNGIBLE() view returns(uint256)
+func (_Loopso *LoopsoCallerSession) FEENONFUNGIBLE() (*big.Int, error) {
+	return _Loopso.Contract.FEENONFUNGIBLE(&_Loopso.CallOpts)
+}
+
 // RELAYERROLE is a free data retrieval call binding the contract method 0x926d7d7f.
 //
 // Solidity: function RELAYER_ROLE() view returns(bytes32)
@@ -352,6 +415,68 @@ func (_Loopso *LoopsoCallerSession) AttestedTokens(arg0 [32]byte) (struct {
 	WrappedTokenAddress common.Address
 }, error) {
 	return _Loopso.Contract.AttestedTokens(&_Loopso.CallOpts, arg0)
+}
+
+// DiscountNft is a free data retrieval call binding the contract method 0x647920d2.
+//
+// Solidity: function discountNft() view returns(address)
+func (_Loopso *LoopsoCaller) DiscountNft(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Loopso.contract.Call(opts, &out, "discountNft")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// DiscountNft is a free data retrieval call binding the contract method 0x647920d2.
+//
+// Solidity: function discountNft() view returns(address)
+func (_Loopso *LoopsoSession) DiscountNft() (common.Address, error) {
+	return _Loopso.Contract.DiscountNft(&_Loopso.CallOpts)
+}
+
+// DiscountNft is a free data retrieval call binding the contract method 0x647920d2.
+//
+// Solidity: function discountNft() view returns(address)
+func (_Loopso *LoopsoCallerSession) DiscountNft() (common.Address, error) {
+	return _Loopso.Contract.DiscountNft(&_Loopso.CallOpts)
+}
+
+// FeeReceiver is a free data retrieval call binding the contract method 0xb3f00674.
+//
+// Solidity: function feeReceiver() view returns(address)
+func (_Loopso *LoopsoCaller) FeeReceiver(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _Loopso.contract.Call(opts, &out, "feeReceiver")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// FeeReceiver is a free data retrieval call binding the contract method 0xb3f00674.
+//
+// Solidity: function feeReceiver() view returns(address)
+func (_Loopso *LoopsoSession) FeeReceiver() (common.Address, error) {
+	return _Loopso.Contract.FeeReceiver(&_Loopso.CallOpts)
+}
+
+// FeeReceiver is a free data retrieval call binding the contract method 0xb3f00674.
+//
+// Solidity: function feeReceiver() view returns(address)
+func (_Loopso *LoopsoCallerSession) FeeReceiver() (common.Address, error) {
+	return _Loopso.Contract.FeeReceiver(&_Loopso.CallOpts)
 }
 
 // GetAllSupportedTokens is a free data retrieval call binding the contract method 0x0107e472.
@@ -507,6 +632,37 @@ func (_Loopso *LoopsoSession) IsTokenSupported(_tokenAddress common.Address, _to
 // Solidity: function isTokenSupported(address _tokenAddress, uint256 _tokenChain) view returns(bool)
 func (_Loopso *LoopsoCallerSession) IsTokenSupported(_tokenAddress common.Address, _tokenChain *big.Int) (bool, error) {
 	return _Loopso.Contract.IsTokenSupported(&_Loopso.CallOpts, _tokenAddress, _tokenChain)
+}
+
+// IsWrappedToken is a free data retrieval call binding the contract method 0x64fb065b.
+//
+// Solidity: function isWrappedToken(address _token) view returns(bool)
+func (_Loopso *LoopsoCaller) IsWrappedToken(opts *bind.CallOpts, _token common.Address) (bool, error) {
+	var out []interface{}
+	err := _Loopso.contract.Call(opts, &out, "isWrappedToken", _token)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
+}
+
+// IsWrappedToken is a free data retrieval call binding the contract method 0x64fb065b.
+//
+// Solidity: function isWrappedToken(address _token) view returns(bool)
+func (_Loopso *LoopsoSession) IsWrappedToken(_token common.Address) (bool, error) {
+	return _Loopso.Contract.IsWrappedToken(&_Loopso.CallOpts, _token)
+}
+
+// IsWrappedToken is a free data retrieval call binding the contract method 0x64fb065b.
+//
+// Solidity: function isWrappedToken(address _token) view returns(bool)
+func (_Loopso *LoopsoCallerSession) IsWrappedToken(_token common.Address) (bool, error) {
+	return _Loopso.Contract.IsWrappedToken(&_Loopso.CallOpts, _token)
 }
 
 // OnERC721Received is a free data retrieval call binding the contract method 0x150b7a02.
@@ -697,6 +853,37 @@ func (_Loopso *LoopsoCallerSession) TokenTransfersNonFungible(arg0 [32]byte) (st
 	return _Loopso.Contract.TokenTransfersNonFungible(&_Loopso.CallOpts, arg0)
 }
 
+// WrappedTokenInfo is a free data retrieval call binding the contract method 0x3e38ac74.
+//
+// Solidity: function wrappedTokenInfo(address _wrappedToken) view returns((address,uint256,uint8,uint8,string,string,address))
+func (_Loopso *LoopsoCaller) WrappedTokenInfo(opts *bind.CallOpts, _wrappedToken common.Address) (ILoopsoTokenAttestation, error) {
+	var out []interface{}
+	err := _Loopso.contract.Call(opts, &out, "wrappedTokenInfo", _wrappedToken)
+
+	if err != nil {
+		return *new(ILoopsoTokenAttestation), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(ILoopsoTokenAttestation)).(*ILoopsoTokenAttestation)
+
+	return out0, err
+
+}
+
+// WrappedTokenInfo is a free data retrieval call binding the contract method 0x3e38ac74.
+//
+// Solidity: function wrappedTokenInfo(address _wrappedToken) view returns((address,uint256,uint8,uint8,string,string,address))
+func (_Loopso *LoopsoSession) WrappedTokenInfo(_wrappedToken common.Address) (ILoopsoTokenAttestation, error) {
+	return _Loopso.Contract.WrappedTokenInfo(&_Loopso.CallOpts, _wrappedToken)
+}
+
+// WrappedTokenInfo is a free data retrieval call binding the contract method 0x3e38ac74.
+//
+// Solidity: function wrappedTokenInfo(address _wrappedToken) view returns((address,uint256,uint8,uint8,string,string,address))
+func (_Loopso *LoopsoCallerSession) WrappedTokenInfo(_wrappedToken common.Address) (ILoopsoTokenAttestation, error) {
+	return _Loopso.Contract.WrappedTokenInfo(&_Loopso.CallOpts, _wrappedToken)
+}
+
 // AttestToken is a paid mutator transaction binding the contract method 0x31ba1648.
 //
 // Solidity: function attestToken((address,uint256,uint8,uint8,string,string,address) attestation) returns()
@@ -718,23 +905,44 @@ func (_Loopso *LoopsoTransactorSession) AttestToken(attestation ILoopsoTokenAtte
 	return _Loopso.Contract.AttestToken(&_Loopso.TransactOpts, attestation)
 }
 
+// BridgeNativeTokens is a paid mutator transaction binding the contract method 0x9bf22e81.
+//
+// Solidity: function bridgeNativeTokens(uint256 _dstChain, address _dstAddress) payable returns()
+func (_Loopso *LoopsoTransactor) BridgeNativeTokens(opts *bind.TransactOpts, _dstChain *big.Int, _dstAddress common.Address) (*types.Transaction, error) {
+	return _Loopso.contract.Transact(opts, "bridgeNativeTokens", _dstChain, _dstAddress)
+}
+
+// BridgeNativeTokens is a paid mutator transaction binding the contract method 0x9bf22e81.
+//
+// Solidity: function bridgeNativeTokens(uint256 _dstChain, address _dstAddress) payable returns()
+func (_Loopso *LoopsoSession) BridgeNativeTokens(_dstChain *big.Int, _dstAddress common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.BridgeNativeTokens(&_Loopso.TransactOpts, _dstChain, _dstAddress)
+}
+
+// BridgeNativeTokens is a paid mutator transaction binding the contract method 0x9bf22e81.
+//
+// Solidity: function bridgeNativeTokens(uint256 _dstChain, address _dstAddress) payable returns()
+func (_Loopso *LoopsoTransactorSession) BridgeNativeTokens(_dstChain *big.Int, _dstAddress common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.BridgeNativeTokens(&_Loopso.TransactOpts, _dstChain, _dstAddress)
+}
+
 // BridgeNonFungibleTokens is a paid mutator transaction binding the contract method 0x40c555dc.
 //
-// Solidity: function bridgeNonFungibleTokens(address _token, uint256 _tokenID, string tokenURI, uint256 _dstChain, address _dstAddress) returns()
+// Solidity: function bridgeNonFungibleTokens(address _token, uint256 _tokenID, string tokenURI, uint256 _dstChain, address _dstAddress) payable returns()
 func (_Loopso *LoopsoTransactor) BridgeNonFungibleTokens(opts *bind.TransactOpts, _token common.Address, _tokenID *big.Int, tokenURI string, _dstChain *big.Int, _dstAddress common.Address) (*types.Transaction, error) {
 	return _Loopso.contract.Transact(opts, "bridgeNonFungibleTokens", _token, _tokenID, tokenURI, _dstChain, _dstAddress)
 }
 
 // BridgeNonFungibleTokens is a paid mutator transaction binding the contract method 0x40c555dc.
 //
-// Solidity: function bridgeNonFungibleTokens(address _token, uint256 _tokenID, string tokenURI, uint256 _dstChain, address _dstAddress) returns()
+// Solidity: function bridgeNonFungibleTokens(address _token, uint256 _tokenID, string tokenURI, uint256 _dstChain, address _dstAddress) payable returns()
 func (_Loopso *LoopsoSession) BridgeNonFungibleTokens(_token common.Address, _tokenID *big.Int, tokenURI string, _dstChain *big.Int, _dstAddress common.Address) (*types.Transaction, error) {
 	return _Loopso.Contract.BridgeNonFungibleTokens(&_Loopso.TransactOpts, _token, _tokenID, tokenURI, _dstChain, _dstAddress)
 }
 
 // BridgeNonFungibleTokens is a paid mutator transaction binding the contract method 0x40c555dc.
 //
-// Solidity: function bridgeNonFungibleTokens(address _token, uint256 _tokenID, string tokenURI, uint256 _dstChain, address _dstAddress) returns()
+// Solidity: function bridgeNonFungibleTokens(address _token, uint256 _tokenID, string tokenURI, uint256 _dstChain, address _dstAddress) payable returns()
 func (_Loopso *LoopsoTransactorSession) BridgeNonFungibleTokens(_token common.Address, _tokenID *big.Int, tokenURI string, _dstChain *big.Int, _dstAddress common.Address) (*types.Transaction, error) {
 	return _Loopso.Contract.BridgeNonFungibleTokens(&_Loopso.TransactOpts, _token, _tokenID, tokenURI, _dstChain, _dstAddress)
 }
@@ -821,6 +1029,27 @@ func (_Loopso *LoopsoSession) GrantRole(role [32]byte, account common.Address) (
 // Solidity: function grantRole(bytes32 role, address account) returns()
 func (_Loopso *LoopsoTransactorSession) GrantRole(role [32]byte, account common.Address) (*types.Transaction, error) {
 	return _Loopso.Contract.GrantRole(&_Loopso.TransactOpts, role, account)
+}
+
+// ReleaseNativeTokens is a paid mutator transaction binding the contract method 0x6cbd1c75.
+//
+// Solidity: function releaseNativeTokens(uint256 _amount, address _to) returns()
+func (_Loopso *LoopsoTransactor) ReleaseNativeTokens(opts *bind.TransactOpts, _amount *big.Int, _to common.Address) (*types.Transaction, error) {
+	return _Loopso.contract.Transact(opts, "releaseNativeTokens", _amount, _to)
+}
+
+// ReleaseNativeTokens is a paid mutator transaction binding the contract method 0x6cbd1c75.
+//
+// Solidity: function releaseNativeTokens(uint256 _amount, address _to) returns()
+func (_Loopso *LoopsoSession) ReleaseNativeTokens(_amount *big.Int, _to common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.ReleaseNativeTokens(&_Loopso.TransactOpts, _amount, _to)
+}
+
+// ReleaseNativeTokens is a paid mutator transaction binding the contract method 0x6cbd1c75.
+//
+// Solidity: function releaseNativeTokens(uint256 _amount, address _to) returns()
+func (_Loopso *LoopsoTransactorSession) ReleaseNativeTokens(_amount *big.Int, _to common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.ReleaseNativeTokens(&_Loopso.TransactOpts, _amount, _to)
 }
 
 // ReleaseNonFungibleTokens is a paid mutator transaction binding the contract method 0x15f5a8c5.
@@ -949,6 +1178,90 @@ func (_Loopso *LoopsoTransactorSession) RevokeRole(role [32]byte, account common
 	return _Loopso.Contract.RevokeRole(&_Loopso.TransactOpts, role, account)
 }
 
+// SetDiscountNft is a paid mutator transaction binding the contract method 0x12705222.
+//
+// Solidity: function setDiscountNft(address _discountNft) returns()
+func (_Loopso *LoopsoTransactor) SetDiscountNft(opts *bind.TransactOpts, _discountNft common.Address) (*types.Transaction, error) {
+	return _Loopso.contract.Transact(opts, "setDiscountNft", _discountNft)
+}
+
+// SetDiscountNft is a paid mutator transaction binding the contract method 0x12705222.
+//
+// Solidity: function setDiscountNft(address _discountNft) returns()
+func (_Loopso *LoopsoSession) SetDiscountNft(_discountNft common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.SetDiscountNft(&_Loopso.TransactOpts, _discountNft)
+}
+
+// SetDiscountNft is a paid mutator transaction binding the contract method 0x12705222.
+//
+// Solidity: function setDiscountNft(address _discountNft) returns()
+func (_Loopso *LoopsoTransactorSession) SetDiscountNft(_discountNft common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.SetDiscountNft(&_Loopso.TransactOpts, _discountNft)
+}
+
+// SetFeeReceiver is a paid mutator transaction binding the contract method 0xefdcd974.
+//
+// Solidity: function setFeeReceiver(address _feeReceiver) returns()
+func (_Loopso *LoopsoTransactor) SetFeeReceiver(opts *bind.TransactOpts, _feeReceiver common.Address) (*types.Transaction, error) {
+	return _Loopso.contract.Transact(opts, "setFeeReceiver", _feeReceiver)
+}
+
+// SetFeeReceiver is a paid mutator transaction binding the contract method 0xefdcd974.
+//
+// Solidity: function setFeeReceiver(address _feeReceiver) returns()
+func (_Loopso *LoopsoSession) SetFeeReceiver(_feeReceiver common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.SetFeeReceiver(&_Loopso.TransactOpts, _feeReceiver)
+}
+
+// SetFeeReceiver is a paid mutator transaction binding the contract method 0xefdcd974.
+//
+// Solidity: function setFeeReceiver(address _feeReceiver) returns()
+func (_Loopso *LoopsoTransactorSession) SetFeeReceiver(_feeReceiver common.Address) (*types.Transaction, error) {
+	return _Loopso.Contract.SetFeeReceiver(&_Loopso.TransactOpts, _feeReceiver)
+}
+
+// SetFungibleFee is a paid mutator transaction binding the contract method 0xd0e04bfa.
+//
+// Solidity: function setFungibleFee(uint256 _fee) returns()
+func (_Loopso *LoopsoTransactor) SetFungibleFee(opts *bind.TransactOpts, _fee *big.Int) (*types.Transaction, error) {
+	return _Loopso.contract.Transact(opts, "setFungibleFee", _fee)
+}
+
+// SetFungibleFee is a paid mutator transaction binding the contract method 0xd0e04bfa.
+//
+// Solidity: function setFungibleFee(uint256 _fee) returns()
+func (_Loopso *LoopsoSession) SetFungibleFee(_fee *big.Int) (*types.Transaction, error) {
+	return _Loopso.Contract.SetFungibleFee(&_Loopso.TransactOpts, _fee)
+}
+
+// SetFungibleFee is a paid mutator transaction binding the contract method 0xd0e04bfa.
+//
+// Solidity: function setFungibleFee(uint256 _fee) returns()
+func (_Loopso *LoopsoTransactorSession) SetFungibleFee(_fee *big.Int) (*types.Transaction, error) {
+	return _Loopso.Contract.SetFungibleFee(&_Loopso.TransactOpts, _fee)
+}
+
+// SetNonFungibleFee is a paid mutator transaction binding the contract method 0x4676f366.
+//
+// Solidity: function setNonFungibleFee(uint256 _fee) returns()
+func (_Loopso *LoopsoTransactor) SetNonFungibleFee(opts *bind.TransactOpts, _fee *big.Int) (*types.Transaction, error) {
+	return _Loopso.contract.Transact(opts, "setNonFungibleFee", _fee)
+}
+
+// SetNonFungibleFee is a paid mutator transaction binding the contract method 0x4676f366.
+//
+// Solidity: function setNonFungibleFee(uint256 _fee) returns()
+func (_Loopso *LoopsoSession) SetNonFungibleFee(_fee *big.Int) (*types.Transaction, error) {
+	return _Loopso.Contract.SetNonFungibleFee(&_Loopso.TransactOpts, _fee)
+}
+
+// SetNonFungibleFee is a paid mutator transaction binding the contract method 0x4676f366.
+//
+// Solidity: function setNonFungibleFee(uint256 _fee) returns()
+func (_Loopso *LoopsoTransactorSession) SetNonFungibleFee(_fee *big.Int) (*types.Transaction, error) {
+	return _Loopso.Contract.SetNonFungibleFee(&_Loopso.TransactOpts, _fee)
+}
+
 // SetTokenFactory is a paid mutator transaction binding the contract method 0x2f73a9f8.
 //
 // Solidity: function setTokenFactory(address _tokenFactory) returns()
@@ -968,6 +1281,159 @@ func (_Loopso *LoopsoSession) SetTokenFactory(_tokenFactory common.Address) (*ty
 // Solidity: function setTokenFactory(address _tokenFactory) returns()
 func (_Loopso *LoopsoTransactorSession) SetTokenFactory(_tokenFactory common.Address) (*types.Transaction, error) {
 	return _Loopso.Contract.SetTokenFactory(&_Loopso.TransactOpts, _tokenFactory)
+}
+
+// LoopsoNativeTokensReleasedIterator is returned from FilterNativeTokensReleased and is used to iterate over the raw logs and unpacked data for NativeTokensReleased events raised by the Loopso contract.
+type LoopsoNativeTokensReleasedIterator struct {
+	Event *LoopsoNativeTokensReleased // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LoopsoNativeTokensReleasedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LoopsoNativeTokensReleased)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LoopsoNativeTokensReleased)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LoopsoNativeTokensReleasedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LoopsoNativeTokensReleasedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LoopsoNativeTokensReleased represents a NativeTokensReleased event raised by the Loopso contract.
+type LoopsoNativeTokensReleased struct {
+	Amount *big.Int
+	To     common.Address
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterNativeTokensReleased is a free log retrieval operation binding the contract event 0x59b630c025978c37eb64e54dcb9157eac7455f1cd69ce1989d7329b4ecbf0cbb.
+//
+// Solidity: event NativeTokensReleased(uint256 indexed amount, address indexed to)
+func (_Loopso *LoopsoFilterer) FilterNativeTokensReleased(opts *bind.FilterOpts, amount []*big.Int, to []common.Address) (*LoopsoNativeTokensReleasedIterator, error) {
+
+	var amountRule []interface{}
+	for _, amountItem := range amount {
+		amountRule = append(amountRule, amountItem)
+	}
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
+	}
+
+	logs, sub, err := _Loopso.contract.FilterLogs(opts, "NativeTokensReleased", amountRule, toRule)
+	if err != nil {
+		return nil, err
+	}
+	return &LoopsoNativeTokensReleasedIterator{contract: _Loopso.contract, event: "NativeTokensReleased", logs: logs, sub: sub}, nil
+}
+
+// WatchNativeTokensReleased is a free log subscription operation binding the contract event 0x59b630c025978c37eb64e54dcb9157eac7455f1cd69ce1989d7329b4ecbf0cbb.
+//
+// Solidity: event NativeTokensReleased(uint256 indexed amount, address indexed to)
+func (_Loopso *LoopsoFilterer) WatchNativeTokensReleased(opts *bind.WatchOpts, sink chan<- *LoopsoNativeTokensReleased, amount []*big.Int, to []common.Address) (event.Subscription, error) {
+
+	var amountRule []interface{}
+	for _, amountItem := range amount {
+		amountRule = append(amountRule, amountItem)
+	}
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
+	}
+
+	logs, sub, err := _Loopso.contract.WatchLogs(opts, "NativeTokensReleased", amountRule, toRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LoopsoNativeTokensReleased)
+				if err := _Loopso.contract.UnpackLog(event, "NativeTokensReleased", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseNativeTokensReleased is a log parse operation binding the contract event 0x59b630c025978c37eb64e54dcb9157eac7455f1cd69ce1989d7329b4ecbf0cbb.
+//
+// Solidity: event NativeTokensReleased(uint256 indexed amount, address indexed to)
+func (_Loopso *LoopsoFilterer) ParseNativeTokensReleased(log types.Log) (*LoopsoNativeTokensReleased, error) {
+	event := new(LoopsoNativeTokensReleased)
+	if err := _Loopso.contract.UnpackLog(event, "NativeTokensReleased", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
 }
 
 // LoopsoNonFungibleTokensBridgedBackIterator is returned from FilterNonFungibleTokensBridgedBack and is used to iterate over the raw logs and unpacked data for NonFungibleTokensBridgedBack events raised by the Loopso contract.
@@ -1126,6 +1592,168 @@ func (_Loopso *LoopsoFilterer) WatchNonFungibleTokensBridgedBack(opts *bind.Watc
 func (_Loopso *LoopsoFilterer) ParseNonFungibleTokensBridgedBack(log types.Log) (*LoopsoNonFungibleTokensBridgedBack, error) {
 	event := new(LoopsoNonFungibleTokensBridgedBack)
 	if err := _Loopso.contract.UnpackLog(event, "NonFungibleTokensBridgedBack", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// LoopsoNonFungibleTokensReleasedIterator is returned from FilterNonFungibleTokensReleased and is used to iterate over the raw logs and unpacked data for NonFungibleTokensReleased events raised by the Loopso contract.
+type LoopsoNonFungibleTokensReleasedIterator struct {
+	Event *LoopsoNonFungibleTokensReleased // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LoopsoNonFungibleTokensReleasedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LoopsoNonFungibleTokensReleased)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LoopsoNonFungibleTokensReleased)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LoopsoNonFungibleTokensReleasedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LoopsoNonFungibleTokensReleasedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LoopsoNonFungibleTokensReleased represents a NonFungibleTokensReleased event raised by the Loopso contract.
+type LoopsoNonFungibleTokensReleased struct {
+	TokenId *big.Int
+	To      common.Address
+	Token   common.Address
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterNonFungibleTokensReleased is a free log retrieval operation binding the contract event 0x8c398b928f8bac4ad1cf5448e6c4e602012df28bcc0e4bf2b9e715da4c3b653b.
+//
+// Solidity: event NonFungibleTokensReleased(uint256 indexed tokenId, address indexed to, address indexed token)
+func (_Loopso *LoopsoFilterer) FilterNonFungibleTokensReleased(opts *bind.FilterOpts, tokenId []*big.Int, to []common.Address, token []common.Address) (*LoopsoNonFungibleTokensReleasedIterator, error) {
+
+	var tokenIdRule []interface{}
+	for _, tokenIdItem := range tokenId {
+		tokenIdRule = append(tokenIdRule, tokenIdItem)
+	}
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
+	}
+	var tokenRule []interface{}
+	for _, tokenItem := range token {
+		tokenRule = append(tokenRule, tokenItem)
+	}
+
+	logs, sub, err := _Loopso.contract.FilterLogs(opts, "NonFungibleTokensReleased", tokenIdRule, toRule, tokenRule)
+	if err != nil {
+		return nil, err
+	}
+	return &LoopsoNonFungibleTokensReleasedIterator{contract: _Loopso.contract, event: "NonFungibleTokensReleased", logs: logs, sub: sub}, nil
+}
+
+// WatchNonFungibleTokensReleased is a free log subscription operation binding the contract event 0x8c398b928f8bac4ad1cf5448e6c4e602012df28bcc0e4bf2b9e715da4c3b653b.
+//
+// Solidity: event NonFungibleTokensReleased(uint256 indexed tokenId, address indexed to, address indexed token)
+func (_Loopso *LoopsoFilterer) WatchNonFungibleTokensReleased(opts *bind.WatchOpts, sink chan<- *LoopsoNonFungibleTokensReleased, tokenId []*big.Int, to []common.Address, token []common.Address) (event.Subscription, error) {
+
+	var tokenIdRule []interface{}
+	for _, tokenIdItem := range tokenId {
+		tokenIdRule = append(tokenIdRule, tokenIdItem)
+	}
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
+	}
+	var tokenRule []interface{}
+	for _, tokenItem := range token {
+		tokenRule = append(tokenRule, tokenItem)
+	}
+
+	logs, sub, err := _Loopso.contract.WatchLogs(opts, "NonFungibleTokensReleased", tokenIdRule, toRule, tokenRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LoopsoNonFungibleTokensReleased)
+				if err := _Loopso.contract.UnpackLog(event, "NonFungibleTokensReleased", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseNonFungibleTokensReleased is a log parse operation binding the contract event 0x8c398b928f8bac4ad1cf5448e6c4e602012df28bcc0e4bf2b9e715da4c3b653b.
+//
+// Solidity: event NonFungibleTokensReleased(uint256 indexed tokenId, address indexed to, address indexed token)
+func (_Loopso *LoopsoFilterer) ParseNonFungibleTokensReleased(log types.Log) (*LoopsoNonFungibleTokensReleased, error) {
+	event := new(LoopsoNonFungibleTokensReleased)
+	if err := _Loopso.contract.UnpackLog(event, "NonFungibleTokensReleased", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

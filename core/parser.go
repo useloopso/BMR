@@ -89,6 +89,28 @@ func attestationFromTokenTransfer(tokenTransfer struct {
 	}
 }
 
+func attestationFromNativeTokenTransfer(
+	nativeTokenName string,
+	nativeTokenSymbol string,
+	tokenTransfer struct {
+		TokenTransfer contracts.ILoopsoTokenTransferBase
+		Amount        *big.Int
+	}, client *ethclient.Client) contracts.ILoopsoTokenAttestation {
+	var decimals uint8 = 18
+	name := "Wrapped " + nativeTokenName
+	symbol := "wl" + nativeTokenSymbol
+
+	return contracts.ILoopsoTokenAttestation{
+		TokenAddress:        common.Address{},
+		TokenChain:          tokenTransfer.TokenTransfer.SrcChain,
+		TokenType:           0,
+		Decimals:            decimals,
+		Symbol:              symbol,
+		Name:                name,
+		WrappedTokenAddress: common.Address{},
+	}
+}
+
 func attestationFromNonFungibleTokenTransfer(nonFungibleTokenTransfer struct {
 	TokenTransfer contracts.ILoopsoTokenTransferBase
 	TokenID       *big.Int
