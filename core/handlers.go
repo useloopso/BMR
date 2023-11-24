@@ -20,37 +20,53 @@ const (
 	NonFungible
 )
 
-func HandleEvent(c *LoopsoClient, chain int, log ethtypes.Log) {
+func (c *LoopsoClient) HandleEvent(chain int, log ethtypes.Log) {
 	eventSig := log.Topics[0].Hex()
 	switch eventSig {
 	case TokensBridged:
 		fmt.Println("new tokens bridged event")
-		handleTokensBridged(c, chain, log)
+		if err := handleTokensBridged(c, chain, log); err != nil {
+			fmt.Println(err)
+			if err := c.RetryOnError(handleTokensBridged, chain, log); err != nil {
+				fmt.Println(err)
+			}
+		}
 	case TokensBridgedBack:
 		fmt.Println("new tokens bridged back event")
-		handleTokensBridgedBack(c, chain, log)
+		if err := handleTokensBridgedBack(c, chain, log); err != nil {
+			fmt.Println(err)
+			if err := c.RetryOnError(handleTokensBridgedBack, chain, log); err != nil {
+				fmt.Println(err)
+			}
+		}
 	case NonFungibleTokensBridgedBack:
 		fmt.Println("new non-fungible tokens bridged back event")
-		handleNonFungibleTokensBridgedBack(c, chain, log)
+		if err := handleNonFungibleTokensBridgedBack(c, chain, log); err != nil {
+			fmt.Println(err)
+			if err := c.RetryOnError(handleNonFungibleTokensBridgedBack, chain, log); err != nil {
+				fmt.Println(err)
+			}
+		}
 	}
 }
 
-func handleTokensBridged(c *LoopsoClient, chain int, log ethtypes.Log) {
+func handleTokensBridged(c *LoopsoClient, chain int, log ethtypes.Log) error {
 	e := praseTokensBridgedEvent(log)
 	switch TokenType(e.TokenType) {
 	case Fungible:
-		bridgeFungibleTokens(c, chain, e.TransferID)
+		return c.bridgeFungibleTokens(chain, e.TransferID)
 	case NonFungible:
-		bridgeNonFungibleTokens(c, chain, e.TransferID)
+		return c.bridgeNonFungibleTokens(chain, e.TransferID)
 	}
+	return nil
 }
 
-func handleTokensBridgedBack(c *LoopsoClient, chain int, log ethtypes.Log) {
+func handleTokensBridgedBack(c *LoopsoClient, chain int, log ethtypes.Log) error {
 	e := parseTokensBridgedBackEvent(log)
-	bridgeFungibleTokensBack(c, chain, e.Amount, e.To, e.AttestationID)
+	return c.bridgeFungibleTokensBack(chain, e.Amount, e.To, e.AttestationID)
 }
 
-func handleNonFungibleTokensBridgedBack(c *LoopsoClient, chain int, log ethtypes.Log) {
+func handleNonFungibleTokensBridgedBack(c *LoopsoClient, chain int, log ethtypes.Log) error {
 	e := parseNonFungibleTokensBridedBackEvent(log)
-	bridgeNonFungibleTokensBack(c, chain, e.TokenId, e.To, e.AttestationID)
+	return c.bridgeNonFungibleTokensBack(chain, e.TokenId, e.To, e.AttestationID)
 }

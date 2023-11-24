@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"sync"
-	"time"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
@@ -36,19 +35,16 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup, stopCh <-chan struc
 		Addresses: []common.Address{address},
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
 	logs := make(chan ethtypes.Log)
-	sub, err := c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
+
+	c.conns[chain].SubscribeNewHead(context.Background(), make(chan *ethtypes.Header))
+
+	sub, err := c.conns[chain].SubscribeFilterLogs(context.Background(), query, logs)
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("Listening on chain ID:", chain)
-
-	const maxReconnectAttempts = 3
-	reconnectAttempts := 0
 
 	for {
 		select {
@@ -57,28 +53,23 @@ func (c *LoopsoClient) Listen(chain int, wg *sync.WaitGroup, stopCh <-chan struc
 		case err := <-sub.Err():
 			fmt.Println("Failed to get event log: ", err)
 
-			reconnectAttempts++
-			if reconnectAttempts > maxReconnectAttempts {
-				return fmt.Errorf("maximum reconnection attempts reached")
+			if err := c.tryReconnect(chain, 3, 1); err != nil {
+				fmt.Println("failed to reconnect to RPC: ", err)
+				if err := c.connectToFallback(chainInfo); err != nil {
+					fmt.Println("all connections failed to chain ", chainInfo.ChainID)
+					return err
+				}
 			}
 
-			backoff := time.Duration(reconnectAttempts) * time.Second
-			fmt.Printf("Reconnecting in %v...\n", backoff)
-
-			select {
-			case <-time.After(backoff):
-			case <-stopCh:
-				return nil // Stop listening if signaled during backoff
-			}
-
-			sub, err = c.conns[chain].SubscribeFilterLogs(ctx, query, logs)
+			sub, err = c.conns[chain].SubscribeFilterLogs(context.Background(), query, logs)
 			if err != nil {
 				return err
 			}
 
-			fmt.Println("listening on chain ID: ", chain)
+			fmt.Println("reconnected to RPC on chain ID: ", chain)
+
 		case vLog := <-logs:
-			go HandleEvent(c, chain, vLog)
+			go c.HandleEvent(chain, vLog)
 		}
 	}
 }
